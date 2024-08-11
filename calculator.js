@@ -30,6 +30,7 @@ function operate(num1, operator, num2) {
 
 const calcContainer = document.querySelector('#calc-container');
 const display = document.querySelector('#display');
+
 calcContainer.addEventListener('click', (event) => {
     const target = event.target;
     
@@ -85,6 +86,7 @@ calcContainer.addEventListener('click', (event) => {
         case "divide":
             display.textContent += "/";
             break;
-
     }
+    displayValue = display.textContent;
+
 });

@@ -22,13 +22,15 @@ body {
     height: 60px;
 }
 
-#row-1>button {
-    width: 50%;
-    /* box-sizing: border-box; not needed, gets it from button*/ 
-}
 button {
     font-size: 32px;
     width: 60px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+#btn-0 {
+    width: 50%;
 }
 
 .btn-wide {
