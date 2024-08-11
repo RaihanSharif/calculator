@@ -19,16 +19,16 @@ body {
 .row {
     display: flex;
     gap: 10px;
+    height: 60px;
 }
 
 #row-1>button {
     width: 50%;
-    box-sizing: border-box;
+    /* box-sizing: border-box; not needed, gets it from button*/ 
 }
 button {
     font-size: 32px;
     width: 60px;
-    height: 60px;
 }
 
 .btn-wide {
