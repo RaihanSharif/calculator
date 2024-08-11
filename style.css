@@ -1,0 +1,36 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#calc-container {
+    background-color: antiquewhite;
+    width: fit-content;
+    height: fit-content;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#display {
+    border: 2px solid black;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+#row-1>button {
+    width: 50%;
+    box-sizing: border-box;
+}
+button {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+}
+
+.btn-wide {
+    width: fit-content;
+}
