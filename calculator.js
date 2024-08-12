@@ -1,14 +1,14 @@
 let first = '';
 let second = '';
 let operator = '';
+const calcContainer = document.querySelector('#calc-container');
+let display = document.querySelector('#display');
+let currentOperator = display;
 
 
 function add(num1, num2) { return num1 + num2; }
-
 function subtract(num1, num2) { return num1 - num2;}
-
 function mutiply(num1, num2) { return num1 * num2;}
-
 function divide(num1, num2) {return num1/num2;}
 
 function operate(num1, operator, num2) {
@@ -18,8 +18,8 @@ function operate(num1, operator, num2) {
 
         case '+':
             return add(n1, n2);
-            case '-':
-                return subtract(n1, n2);
+        case '-':
+            return subtract(n1, n2);
         case '*':
             return mutiply(n1, n2);
         case '/':
@@ -27,32 +27,37 @@ function operate(num1, operator, num2) {
     }
 }
 
-const calcContainer = document.querySelector('#calc-container');
-let display = document.querySelector('#display');
-let isLastButtonOperator = false;
-let currentOperator = display;
-
+// would probably be far easier to work with if I processed the display input instead of values
+// puts any new operand on the right hand side
 function operandHandler(tg) {
     second += tg.value;
     display.textContent = second;
-    isLastButtonOperator = false;
 
 }
 
+// if equals button is pressed or triggered by a 
+// math operator chain. 
+// stores the result in the left hand side, ready to use in future 
+// operations
 function equalsHandler() {
     if (first != '' && second != '' && operator != '') {
-        temp = first;
         first = operate(first, operator, second);
         second = '';
         display.textContent = first;
+        console.log("displaying first");
     }
 }
 
 function clearAll() {
-    // clears operands, operator and screen
+    first = '';
+    second = '';
+    operator = ''
+    currentOperator.classList.remove("active");
+    display.textContent = second;
 }
+
 function backspace() {
-    // backspace on the operand
+
 }
 
 function operatorHandler(target) {
@@ -64,14 +69,12 @@ function operatorHandler(target) {
     equalsHandler();
     operator = target.value;
     
-
 }
 
 calcContainer.addEventListener('click', (event) => {
     const target = event.target;
 
     if (target.classList.contains('numeric')) {
-        currentOperator.classList.remove("active");
         operandHandler(target);
     }
     
@@ -81,9 +84,14 @@ calcContainer.addEventListener('click', (event) => {
         currentOperator.classList.add("active");
         operatorHandler(target);
     }
-
+    
     if (target.id === "equals") {
         equalsHandler(target);
         operator = '';
+        currentOperator.classList.remove("active");
+    } else if (target.id === "clear") {
+        clearAll();
+    } else if(target.id === "backspace") {
+        backspace();
     }
 });
