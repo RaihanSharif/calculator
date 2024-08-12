@@ -10,7 +10,7 @@ body {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
 #display {
@@ -19,7 +19,7 @@ body {
 
 .row {
     display: flex;
-    gap: 10px;
+    gap: 5px;
     height: 60px;
 }
 
@@ -35,11 +35,26 @@ body {
 }
 
 .btn:active {
+    border-style: inset;
     background-color: rgb(1, 117, 117);
 }
 
+
 .operator {
-    background-color: chocolate;
+    background-color: rgb(210, 105, 30);
+}
+
+.operator:hover {
+    background-color: rgb(226, 132, 50);
+}
+.operator:active {
+    border-style: inset;
+    background-color: rgb(226, 142, 81);
+}
+
+.active {
+    border-style: inset;
+    background-color: rgb(226, 142, 81); 
 }
 
 #btn-0 {

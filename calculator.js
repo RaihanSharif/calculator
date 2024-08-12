@@ -33,40 +33,60 @@ function operate(num1, operator, num2) {
 const calcContainer = document.querySelector('#calc-container');
 let display = document.querySelector('#display');
 let isLastButtonOperator = false;
+let currentOperator = display;
+
+function getOperand(tg) {
+    second += tg.value;
+    display.textContent = second;
+    isLastButtonOperator = false;
+
+}
+
+function clearAll() {
+    // clears operands, operator and screen
+}
+function backspace() {
+    // backspace on the operand
+}
+
+function compute(target) {
+    /*
+    if first is empty:
+        move second into first and display first
+        set second to ''
+
+    if first is not empty:
+        first = operate(first, operator, second)
+        second = ''
+        display first
+    update operator
+    */
+    if (first === '') {
+        first = second;
+        second = '';
+        operator = target.value;
+        isLastButtonOperator = true;
+        display.textContent = first;
+    } else {
+        first = operate(parseFloat(first), operator, parseFloat(second));
+        second = '';
+        display.textContent = first;
+        operator = target.value;
+    }
+}
+
 calcContainer.addEventListener('click', (event) => {
     const target = event.target;
 
     if (target.classList.contains('numeric')) {
-        second += target.value;
-        display.textContent = second;
-        isLastButtonOperator = false;
+        getOperand(target);
     }
     
     if(target.classList.contains('operator')) {
-        isLastButtonOperator = true;
-        if (first != '') {
-            first = operate(parseFloat(first), operator, parseFloat(second));
-            console.log(`I'm in first if, first: ${first}, second: ${second}.`);
-            second = '';
-            display.textContent = first;
-            console.log('button1 pressed: ' +target.textContent);
-            if (['+', '-', '/', '*'].includes(target.textContent)) {
-                operator = target.textContent;
-                console.log('math1 operator ' + operator);
-            }
-            
-        }
-        if (first == '') {
-            first = second;
-            second = ''
-            console.log(`I'm in second if, first: ${first}, second: ${second}.`);
-            console.log('button2 pressed: ' +target.textContent);
-            if (['+', '-', '/', '*'].includes(target.textContent)) {
-                operator = target.textContent;
-                console.log(`math2 operator saved ${operator}, first: ${first}, second: ${second}`);
-            }
-            display.textContent = first;
-        }
+        currentOperator.classList.remove("active");
+        currentOperator = target;
+        currentOperator.classList.add("active");
+        compute(target);
     }
 });
 
@@ -75,8 +95,8 @@ first = the result of previous operands
 second = always the place for new operands
 
 on click press numeric:
-    second += button value
-    display second
+            second += button value  //moved to fuction
+            display second
 
 on click math operator:
     if last press was a math operator
