@@ -40,14 +40,16 @@ body {
 }
 
 
-.operator {
+.operator, #equals {
     background-color: rgb(210, 105, 30);
 }
 
-.operator:hover {
+.operator:hover, 
+#equals:hover {
     background-color: rgb(226, 132, 50);
 }
-.operator:active {
+.operator:active,
+#equals:active {
     border-style: inset;
     background-color: rgb(226, 142, 81);
 }

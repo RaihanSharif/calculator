@@ -12,6 +12,8 @@ function mutiply(num1, num2) { return num1 * num2;}
 function divide(num1, num2) {return num1/num2;}
 
 function operate(num1, operator, num2) {
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
     switch(operator) {
         case '+':
             return add(num1, num2);
@@ -24,22 +26,25 @@ function operate(num1, operator, num2) {
     }
 }
 
-// TODO: add +/- functionality 
-// break the first != '' and first '' into functions
-// break clear, backspace into functions
-// create a set operator function
-// seperate */+- from equals and other operators
-
 const calcContainer = document.querySelector('#calc-container');
 let display = document.querySelector('#display');
 let isLastButtonOperator = false;
 let currentOperator = display;
 
-function getOperand(tg) {
+function operandHandler(tg) {
     second += tg.value;
     display.textContent = second;
     isLastButtonOperator = false;
 
+}
+
+function equalsHandler(tg) {
+    if (first != '' && second != '' && operator != '') {
+        second = operate(first, operator, second);
+        first = '';
+        display.textContent = second;
+        console.log("pressed equal button");
+    }
 }
 
 function clearAll() {
@@ -49,29 +54,21 @@ function backspace() {
     // backspace on the operand
 }
 
-function compute(target) {
-    /*
-    if first is empty:
-        move second into first and display first
-        set second to ''
-
-    if first is not empty:
-        first = operate(first, operator, second)
-        second = ''
-        display first
-    update operator
-    */
+function operatorHandler(target) {
     if (first === '') {
         first = second;
         second = '';
         operator = target.value;
         isLastButtonOperator = true;
-        display.textContent = first;
-    } else {
-        first = operate(parseFloat(first), operator, parseFloat(second));
-        second = '';
-        display.textContent = first;
+        display.textContent = second;
+    }
+    else if (second === '') {
         operator = target.value;
+    } else {
+        second = operate(first, operator, second);
+        first = '';
+        operator = target.value;
+        display.textContent = second;
     }
 }
 
@@ -79,15 +76,21 @@ calcContainer.addEventListener('click', (event) => {
     const target = event.target;
 
     if (target.classList.contains('numeric')) {
-        getOperand(target);
+        currentOperator.classList.remove("active");
+        operandHandler(target);
     }
     
     if(target.classList.contains('operator')) {
         currentOperator.classList.remove("active");
         currentOperator = target;
         currentOperator.classList.add("active");
-        compute(target);
+        operatorHandler(target);
     }
+
+    if (target.id === "equals") {
+        equalsHandler(target);
+    }
+    console.log(`first: ${first}, second: ${second}, operator: ${operator}`);
 });
 
 /*
