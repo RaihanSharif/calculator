@@ -1,92 +1,85 @@
-const first = 0;
-const second = 0;
-const operator = '';
+let first = '';
+let second = '';
+let operator = '';
 
 
-function add(num1, num2) {}
+function add(num1, num2) { return num1 + num2; }
 
-function subtract(num1, num2) {}
+function subtract(num1, num2) { return num1 - num2;}
 
-function mutiply(num1, num2) {}
+function mutiply(num1, num2) { return num1 * num2;}
 
-function divide(num1, num2) {}
+function divide(num1, num2) {return num1/num2;}
 
 function operate(num1, operator, num2) {
     switch(operator) {
         case '+':
-            add(num1, num2);
-            break;
+            return add(num1, num2);
         case '-':
-            subtract(num1, num2);
-            break;
+            return subtract(num1, num2);
         case '*':
-            mutiply(num1, num2);
-            break;
+            return mutiply(num1, num2);
         case '/':
-            divide(num1, num2);
-            break;
+            return divide(num1, num2);
     }
 }
 
+// TODO: add +/- functionality 
 const calcContainer = document.querySelector('#calc-container');
-const display = document.querySelector('#display');
+let display = document.querySelector('#display');
 
 calcContainer.addEventListener('click', (event) => {
     const target = event.target;
-    
-    switch(target.id) {
-        case "backspace":
-            display.textContent = display.textContent.slice(0, -1);
-            break;
-        case "clear":
-            display.textContent = '';
-            break;
-        case "1":
-            display.textContent += 1;
-            break;
-        case "2":
-            display.textContent += 2;
-            break;
-        case "3":
-            display.textContent += 3;
-            break;
-        case "4":
-            display.textContent += 4;
-            break;
-        case "5":
-            display.textContent += 5;
-            break;
-        case "6":
-            display.textContent += 6;
-            break;
-        case "7":
-            display.textContent += 7;
-            break;
-        case "8":
-            display.textContent += 8;
-            break;
-        case "9":
-            display.textContent += 9;
-            break;
-        case "0":
-            display.textContent += 0;
-            break;
-        case "decimal":
-            display.textContent += ".";
-            break;
-        case "plus":
-            display.textContent += "+";
-            break;
-        case "minus":
-            display.textContent += "-";
-            break;
-        case "multiply":
-            display.textContent += "*";
-            break;
-        case "divide":
-            display.textContent += "/";
-            break;
-    }
-    displayValue = display.textContent;
 
+    if (target.classList.contains('numeric')) {
+        second += target.value;
+        display.textContent = second;
+    }
+    
+    if(target.classList.contains('operator')) {
+        if (first != '') {
+            first = operate(parseFloat(first), operator, parseFloat(second));
+            console.log(`I'm in first if, first: ${first}, second: ${second}.`);
+            second = '';
+            display.textContent = first;
+            console.log('button1 pressed: ' +target.textContent);
+            if (['+', '-', '/', '*'].includes(target.textContent)) {
+                operator = target.textContent;
+                console.log('math1 operator ' + operator);
+            }
+            
+        }
+        if (first == '') {
+            first = second;
+            second = ''
+            console.log(`I'm in second if, first: ${first}, second: ${second}.`);
+            console.log('button2 pressed: ' +target.textContent);
+            if (['+', '-', '/', '*'].includes(target.textContent)) {
+                operator = target.textContent;
+                console.log(`math2 operator saved ${operator}, first: ${first}, second: ${second}`);
+            }
+            display.textContent = first;
+        }
+    }
 });
+
+/*
+first = the result of previous operands
+second = always the place for new operands
+
+when press numeric:
+    second += button value
+    display second
+
+when press operator:
+    if first not empty and operator not empty:
+      first = operate(first, operator, second)
+      dislay first
+      operator = this operator
+      second = empty
+    if first empty:
+      first = second
+      second = empty
+      operator = this operator
+      display first
+*/
