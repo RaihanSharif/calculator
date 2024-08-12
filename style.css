@@ -1,9 +1,10 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: black;
 }
 
 #calc-container {
-    background-color: antiquewhite;
+    background-color:rgb(93 115 156);
     width: fit-content;
     height: fit-content;
     padding: 15px;
@@ -22,11 +23,23 @@ body {
     height: 60px;
 }
 
-button {
+.btn {
     font-size: 32px;
     width: 60px;
-    border: 2px solid black;
     border-radius: 5px;
+    background-color: rgb(3, 159, 159);
+}
+
+.btn:hover {
+    background-color: rgb(2, 137, 137);
+}
+
+.btn:active {
+    background-color: rgb(1, 117, 117);
+}
+
+.operator {
+    background-color: chocolate;
 }
 
 #btn-0 {
