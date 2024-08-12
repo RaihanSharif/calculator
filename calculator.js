@@ -12,17 +12,18 @@ function mutiply(num1, num2) { return num1 * num2;}
 function divide(num1, num2) {return num1/num2;}
 
 function operate(num1, operator, num2) {
-    num1 = parseFloat(num1);
-    num2 = parseFloat(num2);
+    n1 = parseFloat(num1);
+    n2 = parseFloat(num2);
     switch(operator) {
+
         case '+':
-            return add(num1, num2);
-        case '-':
-            return subtract(num1, num2);
+            return add(n1, n2);
+            case '-':
+                return subtract(n1, n2);
         case '*':
-            return mutiply(num1, num2);
+            return mutiply(n1, n2);
         case '/':
-            return divide(num1, num2);
+            return divide(n1, n2);
     }
 }
 
@@ -38,12 +39,12 @@ function operandHandler(tg) {
 
 }
 
-function equalsHandler(tg) {
+function equalsHandler() {
     if (first != '' && second != '' && operator != '') {
-        second = operate(first, operator, second);
-        first = '';
-        display.textContent = second;
-        console.log("pressed equal button");
+        temp = first;
+        first = operate(first, operator, second);
+        second = '';
+        display.textContent = first;
     }
 }
 
@@ -55,21 +56,15 @@ function backspace() {
 }
 
 function operatorHandler(target) {
-    if (first === '') {
+    
+    if (first == '') {
         first = second;
         second = '';
-        operator = target.value;
-        isLastButtonOperator = true;
-        display.textContent = second;
-    }
-    else if (second === '') {
-        operator = target.value;
-    } else {
-        second = operate(first, operator, second);
-        first = '';
-        operator = target.value;
-        display.textContent = second;
-    }
+    } 
+    equalsHandler();
+    operator = target.value;
+    
+
 }
 
 calcContainer.addEventListener('click', (event) => {
@@ -89,41 +84,6 @@ calcContainer.addEventListener('click', (event) => {
 
     if (target.id === "equals") {
         equalsHandler(target);
+        operator = '';
     }
-    console.log(`first: ${first}, second: ${second}, operator: ${operator}`);
 });
-
-/*
-first = the result of previous operands
-second = always the place for new operands
-
-on click press numeric:
-            second += button value  //moved to fuction
-            display second
-
-on click math operator:
-    if last press was a math operator
-        first = first
-        operator = operator
-        second = empty
-        /// not sure about that, for now just prevent consequtive presses of operators
-    if first not empty:
-                first = operate(first, operator, second)  // this block should be a seperate function
-                dislay first
-                operator = this operator
-                second = empty
-    if first empty:
-                first = second    // this block should be a different function
-                second = empty
-                operator = this operator
-                display first
-
-
-on click = operator:
-    if first or second empty, do nothing
-    else call operate
-    store result in first, clear second
-
-on click backspace operator:
-    update second
-*/
